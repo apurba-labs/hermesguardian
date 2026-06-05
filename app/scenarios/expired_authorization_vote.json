@@ -1,0 +1,18 @@
+{
+  "event": "Alumni Committee Election",
+  "voter_id": "ALM-2026-991",
+  "voter_batch": "Batch-2018",
+  "remote_voting_authorized": true,
+  "authorization_reason": "Hospital Emergency",
+  "approval_id": "AUTH-001",
+  "approval_authority": "Election Committee",
+  "token_id": "VT-8821",
+  "validity_minutes": 30,
+  "elapsed_minutes": 95,
+  "approved_device": "DEV-9912",
+  "network_requirement": "public_ip_only",
+  "vote_timestamp": "2026-06-01T03:49:00",
+  "device_id": "DEV-9912",
+  "ip_address": "103.120.45.10",
+  "candidate": "Candidate-A"
+}
