@@ -2,6 +2,8 @@ from pydantic import BaseModel
 
 
 class InvestigationResponse( BaseModel ):
-    status: str
     scenario: str
-    message: str
+    status: str
+    risk_score: int
+    observations: list[str]
+    recommendation: str
