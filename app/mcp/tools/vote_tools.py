@@ -1,12 +1,14 @@
-def get_vote_events():
+from app.models.events import VoteEvent
 
+def get_vote_events():
     return [
-        {
-            "event_id": "VT-001",
-            "voter_id": "ALM-2026-991",
-            "candidate": "Candidate-A",
-            "device_id": "DEV-9912",
-            "ip_address": "103.120.45.10",
-            "event_type": "vote_submitted",
-        }
+        VoteEvent(
+            event_id="VT-001",
+            voter_id="ALM-001",
+            voter_batch="Batch-2018",
+            candidate="Candidate-A",
+            timestamp="2026-06-15T10:00:00",
+            device_id="DEV-001",
+            ip_address="103.120.45.10"
+        )
     ]
