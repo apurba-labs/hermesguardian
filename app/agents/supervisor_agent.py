@@ -31,6 +31,7 @@ class SupervisorAgent:
         )
 
         report = reporting_agent.generate(
+            scenario,
             integrity_result,
             correlation_result,
         )

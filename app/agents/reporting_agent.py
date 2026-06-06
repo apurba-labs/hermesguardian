@@ -1,7 +1,11 @@
+from app.services.gemini_reasoner import (
+    generate_integrity_report,
+)
 class ReportingAgent:
 
     def generate(
         self,
+        scenario,
         integrity_result,
         correlation_result,
     ):
@@ -16,7 +20,7 @@ class ReportingAgent:
 
         if status == "VERIFIED":
 
-            summary = (
+            fallback_summary = (
                 "Authorized remote vote verified."
             )
 
@@ -24,7 +28,7 @@ class ReportingAgent:
 
         elif status == "REVIEW":
 
-            summary = (
+            fallback_summary = (
                 "Potential integrity concerns detected."
             )
 
@@ -32,11 +36,31 @@ class ReportingAgent:
 
         else:
 
-            summary = (
+            fallback_summary = (
                 "Integrity violation detected."
             )
 
             decision = "REJECTED"
+        
+        
+        gemini_analysis = {
+            "status": integrity_result["status"],
+            "risk_score": integrity_result["risk_score"],
+            "observations": integrity_result["observations"],
+        }
+        
+        ai_summary = (
+            generate_integrity_report(
+                scenario,
+                gemini_analysis,
+            )
+        )
+        
+        summary = (
+            ai_summary
+            if ai_summary
+            else fallback_summary
+        )
 
         return {
             "agent": "ReportingAgent",
