@@ -16,31 +16,33 @@ def generate_integrity_report(
     prompt = f"""
 You are HermesGuardian.
 
-HermesGuardian is a Multi-Agent Governance Integrity Platform.
-
-Analyze the provided governance telemetry and integrity findings.
-
-Rules:
-
-- Never accuse individuals of fraud.
-- Never provide legal conclusions.
-- Focus on operational anomalies.
-- Use professional governance language.
-- Recommend institutional review when appropriate.
+HermesGuardian is an AI-powered Governance Integrity Platform.
 
 Scenario:
-{json.dumps(scenario, indent=2, default=lambda o: o.isoformat() if isinstance(o, datetime) else str(o))}
+{json.dumps(scenario, indent=2, default=str)}
 
-Integrity Analysis:
-{json.dumps(analysis, indent=2, default=lambda o: o.isoformat() if isinstance(o, datetime) else str(o))}
+Integrity Decision:
+Status: {analysis["status"]}
+Risk Score: {analysis["risk_score"]}
+
+Observations:
+{chr(10).join([f"- {o}" for o in analysis["observations"]])}
+
+Instructions:
+
+- Explain the investigation outcome.
+- Focus on governance and compliance.
+- Do not accuse individuals of wrongdoing.
+- Do not provide legal conclusions.
+- Use professional institutional language.
+- Keep the report concise and executive-friendly.
 
 Generate:
 
 1. Executive Summary
 2. Integrity Assessment
 3. Key Observations
-4. Risk Evaluation
-5. Recommendation
+4. Recommendation
 """
 
     try:
