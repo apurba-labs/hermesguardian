@@ -5,6 +5,8 @@ class Settings(BaseSettings):
     API_HOST: str = "0.0.0.0"
     API_PORT: int = 8000
     API_BASE_URL: str = "http://localhost:8000"
+    DT_ENVIRONMENT: str = "your_dynatrace_environment_url_here"
+    DT_PERSONAL_ACCESS_TOKEN: str = "your_dynatrace_personal_access_token_here"
 
     # This replaces load_dotenv() and manages env priorities cleanly
     model_config = SettingsConfigDict(
