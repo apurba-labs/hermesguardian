@@ -1,9 +1,10 @@
 from pydantic import BaseModel
-
+from typing import Dict, Any
 
 class InvestigationResponse( BaseModel ):
-    scenario: str
-    status: str
+    summary: str
     risk_score: int
-    observations: list[str]
-    recommendation: str
+    decision: str
+    findings: list[str]
+    integrity: Dict[str, Any]
+    correlation: Dict[str, Any]

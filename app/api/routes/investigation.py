@@ -8,6 +8,10 @@ from app.models.responses.investigation_response import (
     InvestigationResponse,
 )
 
+from app.agents.supervisor_agent import (
+    SupervisorAgent,
+)
+
 from app.services.scenario_loader import (
     load_scenario,
 )
@@ -25,15 +29,21 @@ def investigate( request: InvestigationRequest, ) -> InvestigationResponse:
     scenario = load_scenario(
         request.scenario
     )
-
-    analysis = analyze_vote(
-        scenario
+    
+    analysis = analyze_vote(scenario)
+    
+    supervisor = SupervisorAgent()
+    
+    report = supervisor.run(
+        scenario,
+        analysis
     )
-
+    
     return InvestigationResponse(
-        scenario=request.scenario,
-        status=analysis["status"],
-        risk_score=analysis["risk_score"],
-        observations=analysis["observations"],
-        recommendation=analysis["recommendation"],
+        summary=report["summary"],
+        risk_score=report["risk_score"],
+        decision=report["decision"],
+        findings=report["findings"],
+        integrity=report["integrity"],      
+        correlation=report["correlation"],
     )
