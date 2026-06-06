@@ -9,9 +9,30 @@ from app.mcp.tools.authorization_tools import (
 
 class CorrelationAgent:
 
-    def investigate(self):
+    def investigate(
+        self,
+        scenario,
+    ):
+
+        votes = get_vote_events()
+
+        authorizations = (
+            get_authorization_events()
+        )
 
         return {
-            "votes": get_vote_events(),
-            "authorizations": get_authorization_events(),
+            "agent": "CorrelationAgent",
+            "voter_id": scenario["voter_id"],
+            "device_id": scenario["device_id"],
+            "approved_device": scenario[
+                "approved_device"
+            ],
+            "votes": [
+                vote.model_dump()
+                for vote in votes
+            ],
+            "authorizations": [
+                auth.model_dump()
+                for auth in authorizations
+            ],
         }

@@ -1,23 +1,18 @@
-from app.services.report_generator import (
-    generate_report,
-)
-
-
 class ReportingAgent:
 
     def generate(
         self,
-        scenario,
-        analysis,
+        integrity_result,
         correlation_result,
     ):
 
-        report = generate_report(
-            scenario,
-            analysis,
-        )
+        risk_score = integrity_result["risk_score"]
 
-        status = analysis["status"]
+        status = integrity_result["status"]
+
+        observations = integrity_result[
+            "observations"
+        ]
 
         if status == "VERIFIED":
 
@@ -43,16 +38,12 @@ class ReportingAgent:
 
             decision = "REJECTED"
 
-        report["summary"] = summary
-        report["decision"] = decision
-        report["findings"] = analysis[
-            "observations"
-        ]
-
-        report["integrity"] = analysis
-
-        report["correlation"] = (
-            correlation_result
-        )
-
-        return report
+        return {
+            "agent": "ReportingAgent",
+            "summary": summary,
+            "risk_score": risk_score,
+            "decision": decision,
+            "findings": observations,
+            "integrity": integrity_result,
+            "correlation": correlation_result,
+        }
