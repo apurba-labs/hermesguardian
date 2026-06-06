@@ -1,6 +1,12 @@
 from app.services.gemini_reasoner import (
     generate_integrity_report,
 )
+
+from app.services.dynatrace_mapper import (
+    build_observability_snapshot,
+)
+
+
 class ReportingAgent:
 
     def generate(
@@ -62,7 +68,7 @@ class ReportingAgent:
             else fallback_summary
         )
 
-        return {
+        report_payload = {
             "agent": "ReportingAgent",
             "summary": summary,
             "risk_score": risk_score,
@@ -71,3 +77,11 @@ class ReportingAgent:
             "integrity": integrity_result,
             "correlation": correlation_result,
         }
+        
+        report_payload["observability"] = (
+            build_observability_snapshot(
+                report_payload
+            )
+        )
+
+        return report_payload

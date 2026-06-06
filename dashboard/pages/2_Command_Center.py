@@ -90,6 +90,43 @@ if report:
     else:
         st.info("No security cluster fault events recorded.")
 
+    with st.expander("🔭 Dynatrace Observability View"):
+            observability = report.get(
+                "observability",
+                {}
+            )
+            st.markdown("#### Business Event & Service Health Snapshot")
+            st.write(observability.get("business_event", "N/A"))
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+                st.metric(
+                    "Problem Status",
+                    observability.get("problem_status", "UNKNOWN")
+                )
+
+            with col2:
+                st.metric(
+                    "Risk Score",
+                    f"{observability.get('risk_score', 0)}/100"
+                )
+            
+            st.markdown("#### Investigation Trace ID")
+            st.code(
+                observability.get(
+                    "investigation_trace",
+                    "N/A"
+                )
+            )
+                
+            st.markdown("#### Agent Workflow Trace")
+            for agent in observability.get(
+                "agent_workflow",
+                []
+            ):
+                st.write(f"→ {agent}")
+                
     with st.expander("📦 Raw JSON Payload (Full Report)"):
         st.json(report)
 
