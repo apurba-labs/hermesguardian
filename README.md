@@ -1,98 +1,281 @@
 # HermesGuardian
 
-HermesGuardian is an AI-powered governance integrity platform designed to investigate exceptional voting events and help institutions make transparent, evidence-based decisions.
+HermesGuardian is an AI-powered Governance Integrity Intelligence Platform that combines Google Gemini 2.5 Flash, Multi-Agent Investigations, MCP-powered telemetry, and Dynatrace observability to investigate exceptional governance events and generate transparent, auditable institutional decisions.
 
-Built for the Google Cloud Rapid Agent Hackathon, HermesGuardian combines Google Gemini, FastAPI, FastMCP, and Dynatrace observability concepts to evaluate governance workflows and generate executive investigation reports.
+---
 
-## Problem
+## Architecture Overview
 
-Traditional voting systems record votes.
+HermesGuardian follows a modular multi-agent architecture designed to separate evidence collection, integrity analysis, AI reasoning, and observability.
 
-They rarely investigate votes.
+```text
+Voting Portal (Streamlit)
+           │
+           ▼
+    FastAPI Backend
+           │
+           ▼
+     SupervisorAgent
+      ├─────────────┐
+      ▼             ▼
+CorrelationAgent  IntegrityAgent
+      │             │
+      └──────┬──────┘
+             ▼
+      ReportingAgent
+             │
+             ▼
+  Google Gemini 2.5 Flash
+             │
+             ▼
+ Executive Governance Report
+             │
+     ┌───────┴────────┐
+     ▼                ▼
+MCP Telemetry     Dynatrace
+    Server       Observability
+```
 
-Organizations frequently face exceptional situations such as:
+---
 
-* Hospital emergency voting
-* Overseas voters
-* Device verification requirements
-* Expired voting authorizations
+## Core Components
 
-These situations require policy validation, evidence collection, and transparent decision making.
+### SupervisorAgent
 
-HermesGuardian helps institutions investigate these events through AI-powered agent workflows.
+Coordinates the investigation lifecycle and orchestrates specialized agents.
 
-## Key Features
+Responsibilities:
 
-* Multi-agent investigation workflow
-* Google Gemini reasoning
-* FastAPI orchestration layer
-* FastMCP-powered institutional telemetry
-* Governance integrity analysis
-* Executive investigation reports
-* Observability-driven investigation timeline
-* Interactive command center dashboard
+* Investigation workflow management
+* Agent coordination
+* Result aggregation
 
-## Architecture
+### CorrelationAgent
 
-Voting Event
+Collects governance telemetry and correlates investigation evidence.
 
-↓
+Responsibilities:
 
-FastAPI Investigation API
+* Vote telemetry collection
+* Authorization evidence retrieval
+* Investigation trace correlation
 
-↓
+### IntegrityAgent
 
-Supervisor Agent
+Performs deterministic integrity analysis.
 
-├── Correlation Agent
+Responsibilities:
 
-├── Integrity Agent
+* Policy validation
+* Risk score calculation
+* Governance rule evaluation
 
-└── Reporting Agent
+### ReportingAgent
 
-↓
+Generates executive governance assessments.
 
-FastMCP Tools
+Responsibilities:
 
-├── Vote Events
+* Report generation
+* Google Gemini integration
+* Governance summary creation
 
-├── Authorization Events
+---
 
-└── Integrity Events
+## Investigation Workflow
 
-↓
+1. Governance event submitted through the Voting Portal
+2. FastAPI API receives investigation request
+3. Scenario configuration is loaded
+4. SupervisorAgent orchestrates investigation
+5. CorrelationAgent gathers telemetry
+6. IntegrityAgent evaluates compliance and risk
+7. ReportingAgent invokes Google Gemini 2.5 Flash
+8. Executive report is generated
+9. Investigation data is exposed through MCP
+10. Observability events are published to Dynatrace
 
-Executive Investigation Report
+---
 
-## Investigation Scenarios
+## Supported Investigation Scenarios
 
-HermesGuardian currently supports:
+### Authorized Remote Vote
 
-1. Authorized Remote Vote
-2. Device Mismatch Vote
-3. Expired Authorization Vote
+Expected Outcome:
 
-Each scenario produces a unique investigation outcome and recommendation.
+* Risk Score: Low
+* Decision: Accepted
+
+### Device Mismatch Vote
+
+Expected Outcome:
+
+* Risk Score: Elevated
+* Decision: Manual Review
+
+### Expired Authorization Vote
+
+Expected Outcome:
+
+* Risk Score: Critical
+* Decision: Rejected
+
+---
+
+## Google Gemini Integration
+
+HermesGuardian uses Google Gemini 2.5 Flash to generate executive governance assessments.
+
+Design Principles:
+
+* Deterministic systems calculate risk scores
+* AI generates governance narratives
+* AI does not determine investigation outcomes
+* Human oversight remains central
+
+This separation ensures explainability and auditability.
+
+---
+
+## MCP Telemetry Server
+
+HermesGuardian exposes governance telemetry through FastMCP.
+
+Available MCP Tools:
+
+```python
+get_votes()
+
+get_authorizations()
+
+get_integrity_incidents()
+
+get_investigations()
+```
+
+The MCP layer enables AI agents and external systems to access governance evidence through a standardized interface.
+
+---
+
+## Dynatrace Integration
+
+HermesGuardian transforms governance investigations into observable business events.
+
+Published Event Categories:
+
+* Governance Business Events
+* Investigation Traces
+* Integrity Incidents
+* Risk Indicators
+* Agent Workflow Metadata
+
+Example Event Payload:
+
+```json
+{
+  "title": "HermesGuardian Institutional Governance Audit",
+  "eventType": "CUSTOM_INFO",
+  "properties": {
+    "business_event": "Remote Vote Submission",
+    "problem_status": "ACCEPTED",
+    "risk_score": "0",
+    "voter_id": "ALM-2026-991"
+  }
+}
+```
+
+---
 
 ## Technology Stack
 
-* Python
+### Backend
+
 * FastAPI
-* Streamlit
-* Google Gemini
-* FastMCP
+* Python 3.12
 * Pydantic
-* Dynatrace Observability Concepts
+* Uvicorn
 
-## Potential Applications
+### AI
 
-* Alumni Association Elections
-* University Governance
-* NGO Voting
-* Professional Associations
-* Cooperative Societies
-* Community Boards
+* Google Gemini 2.5 Flash
+* Google GenAI SDK
 
-## Vision
+### Observability
 
-Our vision is to combine AI reasoning, institutional telemetry, and observability principles to improve trust, transparency, and accountability in governance processes.
+* Dynatrace Events API
+* Governance Event Mapping
+
+### Agent Infrastructure
+
+* FastMCP
+* Multi-Agent Architecture
+
+### Frontend
+
+* Streamlit
+
+---
+
+## Running HermesGuardian
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Start FastAPI
+
+```bash
+uvicorn app.main:app --reload
+```
+
+### Start Dashboard
+
+```bash
+streamlit run dashboard/app.py
+```
+
+### Start MCP Server
+
+```bash
+python -m app.mcp.server
+```
+
+---
+
+## Project Structure
+
+```text
+app/
+├── agents/
+├── api/
+├── mcp/
+├── models/
+├── repositories/
+├── services/
+├── scenarios/
+
+dashboard/
+├── components/
+├── pages/
+
+tests/
+```
+
+---
+
+## Future Roadmap
+
+* Real-time governance monitoring
+* Historical investigation analytics
+* OpenTelemetry support
+* Expanded Dynatrace observability
+* Additional governance workflows
+* Enterprise compliance reporting
+
+---
+
+## License
+
+MIT License
