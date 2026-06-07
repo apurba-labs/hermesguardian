@@ -1,12 +1,25 @@
 # HermesGuardian
 
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
+![Gemini](https://img.shields.io/badge/Google-Gemini%202.5%20Flash-orange)
+![Dynatrace](https://img.shields.io/badge/Dynatrace-Observability-brightgreen)
+![MCP](https://img.shields.io/badge/FastMCP-Telemetry-purple)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
 HermesGuardian is an AI-powered Governance Integrity Intelligence Platform that combines Google Gemini 2.5 Flash, Multi-Agent Investigations, MCP-powered telemetry, and Dynatrace observability to investigate exceptional governance events and generate transparent, auditable institutional decisions.
 
 ---
 
-## Architecture Overview
+## Overview
 
-HermesGuardian follows a modular multi-agent architecture designed to separate evidence collection, integrity analysis, AI reasoning, and observability.
+Institutions occasionally face exceptional governance situations where standard procedures must be temporarily bypassed. Emergency remote voting, device verification failures, and authorization exceptions can introduce uncertainty, reduce transparency, and make post-event investigations difficult.
+
+HermesGuardian helps institutions investigate these events through evidence correlation, deterministic risk analysis, AI-assisted reasoning, and observability-driven governance workflows.
+
+---
+
+## Architecture Overview
 
 ```text
 Voting Portal (Streamlit)
@@ -133,7 +146,7 @@ Design Principles:
 * AI does not determine investigation outcomes
 * Human oversight remains central
 
-This separation ensures explainability and auditability.
+This separation ensures explainability, transparency, and auditability.
 
 ---
 
@@ -179,7 +192,9 @@ Example Event Payload:
     "business_event": "Remote Vote Submission",
     "problem_status": "ACCEPTED",
     "risk_score": "0",
-    "voter_id": "ALM-2026-991"
+    "voter_id": "ALM-2026-991",
+    "agent_workflow": "SupervisorAgent -> ReportingAgent",
+    "confidence_level": "High (Gemini 2.5 Flash Verified)"
   }
 }
 ```
@@ -216,7 +231,44 @@ Example Event Payload:
 
 ---
 
-## Running HermesGuardian
+## Prerequisites
+
+* Python 3.12+
+* Google Gemini API Key
+* Dynatrace Tenant (Optional)
+* Git
+
+HermesGuardian has been tested using Python 3.12 and Google Gemini 2.5 Flash.
+
+---
+
+## Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/apurba-labs/hermesguardian.git
+
+cd hermesguardian
+```
+
+### Create Virtual Environment
+
+Linux / macOS
+
+```bash
+python3 -m venv .venv
+
+source .venv/bin/activate
+```
+
+Windows
+
+```powershell
+python -m venv .venv
+
+.venv\Scripts\activate
+```
 
 ### Install Dependencies
 
@@ -224,13 +276,35 @@ Example Event Payload:
 pip install -r requirements.txt
 ```
 
-### Start FastAPI
+### Configure Environment
 
-```bash
-uvicorn app.main:app --reload
+Create a `.env` file:
+
+```env
+GEMINI_API_KEY=your_google_gemini_api_key
+
+DYNATRACE_BASE_URL=https://your-tenant.live.dynatrace.com
+
+DYNATRACE_API_TOKEN=your_dynatrace_api_token
 ```
 
-### Start Dashboard
+---
+
+## Running HermesGuardian
+
+### Start FastAPI Backend
+
+```bash
+uvicorn app.api.main:app --reload
+```
+
+API Documentation:
+
+```text
+http://localhost:8000/docs
+```
+
+### Start Streamlit Dashboard
 
 ```bash
 streamlit run dashboard/app.py
