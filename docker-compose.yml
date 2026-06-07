@@ -4,7 +4,6 @@ services:
   api:
     build: .
     container_name: hermesguardian-api
-    # FIXED: Command points to app.api.main to match your uvicorn structure
     command: uvicorn app.api.main:app --host 0.0.0.0 --port 8000
     volumes:
       - .:/app
@@ -23,7 +22,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8085:8501
+      - "8085:8501"
     env_file:
       - .env
     depends_on:
