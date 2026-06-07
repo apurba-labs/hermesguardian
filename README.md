@@ -9,6 +9,8 @@
 
 HermesGuardian is an AI-powered Governance Integrity Intelligence Platform that combines Google Gemini 2.5 Flash, Multi-Agent Investigations, MCP-powered telemetry, and Dynatrace observability to investigate exceptional governance events and generate transparent, auditable institutional decisions.
 
+🌐 Live Demo: https://hermesguardian.gotihub.com/
+
 ---
 
 ## Overview
