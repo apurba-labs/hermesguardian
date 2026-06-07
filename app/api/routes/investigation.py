@@ -20,7 +20,7 @@ from app.services.integrity_analyzer import (
     analyze_vote,
 )
 
-router = APIRouter()
+router = APIRouter(prefix="/api")
 
 
 @router.post( "/investigate", response_model=InvestigationResponse, )

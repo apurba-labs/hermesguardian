@@ -44,7 +44,7 @@ if st.button("Submit Vote", type="primary"):
 
     try:
         response = requests.post(
-            f"{settings.API_BASE_URL}/investigate",
+            f"{settings.API_BASE_URL}/api/investigate",
             json={"scenario": selected_scenario},
             timeout=30,
         )
