@@ -23,11 +23,11 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8085:8501"
+      - "8085:8501
     env_file:
       - .env
     depends_on:
-      - api  # FIXED: Pointed directly to the correct compose service key
+      - api
     restart: always
     networks:
       - gotihub_network
