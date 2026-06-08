@@ -9,7 +9,9 @@
 
 HermesGuardian is an AI-powered Governance Integrity Intelligence Platform that combines Google Gemini 2.5 Flash, Multi-Agent Investigations, MCP-powered telemetry, and Dynatrace observability to investigate exceptional governance events and generate transparent, auditable institutional decisions.
 
-🌐 Live Demo: https://hermesguardian.gotihub.com/
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success)](https://hermesguardian.gotihub.com)
+
+🚀 Built for the Google Cloud Rapid Agent Hackathon 2026
 
 ---
 
@@ -317,6 +319,23 @@ streamlit run dashboard/app.py
 ```bash
 python -m app.mcp.server
 ```
+## Deployment
+
+HermesGuardian is containerized using Docker and deployed behind a shared Nginx reverse proxy infrastructure.
+
+Production deployment includes:
+
+FastAPI Backend Service
+Streamlit Governance Dashboard
+Google Gemini 2.5 Flash Integration
+FastMCP Telemetry Server
+Dynatrace Event Ingestion Pipeline
+Docker Compose Orchestration
+Shared Nginx Reverse Proxy with SSL Termination
+
+Live Environment:
+
+https://hermesguardian.gotihub.com
 
 ---
 
